@@ -50,7 +50,7 @@ class Board extends React.Component {
 
 // changes the state everytime a button is clicked, but tests if the game isn't over before
   handleClick(i) {
-    // where the algorithim knows who is who
+
     computer = this.state.xIsNext ? 'O' : 'X';
     human = this.state.xIsNext ? 'X' : 'O';
 
@@ -64,7 +64,7 @@ class Board extends React.Component {
       xIsNext: !this.state.xIsNext,
     },
     this.AIDecider
-  );
+    );
   }
 
 
@@ -107,7 +107,7 @@ class Board extends React.Component {
   AIDecider() {
     let boardCopy = this.copyBoard(this.state.squares);
     let move = null;
-    let bestMoveScore = 100;
+    let bestMoveScore = -100;
     let newBoard = null;
     let publishedBoard = null;
     // doesn't do anything if the game is over
@@ -127,7 +127,7 @@ class Board extends React.Component {
       newBoard = this.validMove(i, computer, boardCopy);
       if (newBoard) {
         let moveScore = this.maxScore(newBoard);
-        if (moveScore < bestMoveScore) {
+        if (moveScore > bestMoveScore) {
           bestMoveScore = moveScore;
           move = i;
         }
@@ -160,19 +160,19 @@ class Board extends React.Component {
 
   minScore(board) {
     if (calculateWinner(board) === human) {
-      return 10;
-    } else if (calculateWinner(board) === computer) {
       return -10;
+    } else if (calculateWinner(board) === computer) {
+      return 10;
     } else if (isItATie(board)) {
       return 0;
     } else {
-      let bestMoveValue = 100;
+      let bestMoveValue = -100;
       let move = 0;
       for (let i = 0; i < board.length; i++) {
         let newBoard = this.validMove(i, computer, board);
         if (newBoard) {
           let predictedMoveValue = this.maxScore(newBoard);
-          if (predictedMoveValue < bestMoveValue) {
+          if (predictedMoveValue > bestMoveValue) {
             bestMoveValue = predictedMoveValue;
             move = i;
           }
@@ -186,19 +186,19 @@ class Board extends React.Component {
 
   maxScore(board) {
     if (calculateWinner(board) === human) {
-      return 10;
-    } else if (calculateWinner(board) === computer) {
       return -10;
+    } else if (calculateWinner(board) === computer) {
+      return 10;
     } else if (isItATie(board)) {
       return 0;
     } else {
-      let bestMoveValue = -100;
+      let bestMoveValue = 100;
       let move = 0;
       for (var i = 0; i < board.length; i++) {
         let newBoard = this.validMove(i, human, board);
         if (newBoard) {
           var predictedMoveValue = this.minScore(newBoard);
-          if (predictedMoveValue > bestMoveValue) {
+          if (predictedMoveValue < bestMoveValue) {
             bestMoveValue = predictedMoveValue;
             move = i;
           }
