@@ -194,10 +194,10 @@ class Board extends React.Component {
     } else {
       let bestMoveValue = 100;
       let move = 0;
-      for (var i = 0; i < board.length; i++) {
+      for (let i = 0; i < board.length; i++) {
         let newBoard = this.validMove(i, human, board);
         if (newBoard) {
-          var predictedMoveValue = this.minScore(newBoard);
+          let predictedMoveValue = this.minScore(newBoard);
           if (predictedMoveValue < bestMoveValue) {
             bestMoveValue = predictedMoveValue;
             move = i;
